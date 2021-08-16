@@ -1,7 +1,8 @@
 sub EVENT_SAY {
 	if ($text=~/hail/i) {
 		quest::say("Hello, $name, thanks for stopping by my shop.  Perhaps you'd be interested in something ...rare?");
-		
+	}
+}
 #::		my $accountID = 0;
 #::			my $karma = 0;
 
@@ -49,4 +50,4 @@ sub EVENT_SAY {
 #::				}
 #::			}
 #::		}
-#::	}
+#::  }
