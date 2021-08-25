@@ -1,6 +1,7 @@
 sub EVENT_SPAWN {
 	#:: Create a timer 'falorn_depop' that triggers every 300 seconds (5 min)
 	quest::settimer("falorn_depop", 300);
+	quest::say("I am Falorn. Good day to thee.");
 }
 
 sub EVENT_TIMER {
@@ -52,8 +53,8 @@ sub EVENT_ITEM {
 		quest::exp(100000);
 		quest::depop();
 	}
-	#:: Match a 20928 - Ivory Tessera, a 20795 - Tiny Ruby, and a 20971 - Azure Ring
-	elsif (plugin::takeItems(20928 => 1, 20795 => 1, 20971 => 1)) {		#:: Warrior Test of Skill
+	#:: Match a 20928 - Ivory Tessera, a 20970 - Small Ruby, and a 20971 - Azure Ring
+	elsif (plugin::takeItems(20928 => 1, 20970 => 1, 20971 => 1)) {		#:: Warrior Test of Skill
 		quest::say("You have proven yourself worthy.");
 		#:: Give a 14551 - Azure Ruby Ring
 		quest::summonitem(14551);
