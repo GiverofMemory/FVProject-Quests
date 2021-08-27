@@ -1,6 +1,7 @@
 sub EVENT_SPAWN {
 	#:: Create a timer 'denise_depop' that triggers every 300 seconds (5 min)
 	quest::settimer("denise_depop", 300);
+	quest::say("Rejoice and sing my friend.");
 }
 
 
@@ -23,7 +24,7 @@ sub EVENT_SAY {
 		quest::say("The sweet sound rising forth from our throats are what makes us truly great.  Go forth and give voice to your songs, and return to me a platinum disc, a music box, and a light woolen mantle. If you do this I shall give you the Songweaver's Mantle. Good luck!");
 	}
 	elsif ($text=~/tone/i) {
-		quest::say("Tone is important to all singers. Prove to me that you can keep your tone even and pure by bringing me an Ochre Tessera, a songbird statuette, and a light woolen cloak. If you do this I will give you the Mask of the Songbird.");
+		quest::say("Tone is important to all singers. Prove to me that you can keep your tone even and pure by bringing me an Ochre Tessera, a songbird statuette, and a light woolen mask. If you do this I will give you the Mask of the Songbird.");
 	}
 }
 
@@ -50,8 +51,8 @@ sub EVENT_ITEM {
 		quest::exp(100000);
 		quest::depop();
 	}
-	#:: Match a 20933 - Ochre Tessera, a 20823 - Light Woolen Mantle, and a 20820 - Songbird Statuette
-	elsif (plugin::takeItems(20933 => 1, 20823 => 1, 20820 => 1)) {				#:: Bard Test of Tone
+	#:: Match a 20933 - Ochre Tessera, a 20821 - Light Woolen Mask, and a 20820 - Songbird Statuette
+	elsif (plugin::takeItems(20933 => 1, 20821 => 1, 20820 => 1)) {				#:: Bard Test of Tone
 		quest::say("Excellent! Take this as your reward.");
 		#:: Give a 2711 - Mask of the Songbird
 		quest::summonitem(2711);
