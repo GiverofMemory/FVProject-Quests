@@ -3,12 +3,15 @@ my $LockoutTime = 604800;
 sub EVENT_SAY {
         if ($text=~/hail/i) {
                 $raid = $client->GetRaid();
-		if ($raid > 0) {
-                        $key = $name . "-soldungb-instance";
+                if ($ulevel < 46) {
+			$client->Message(15,"Much to learn you still have… padawan. Return once your power has increased!");
+		}
+		elsif ($raid > 0) {
+                        $key = $name . "-airplane-instance";
                         if (!quest::get_data($key)) {
-                                $key = $name . "-soldungb-raid";
+                                $key = $name . "-airplane-raid";
                                 if (!quest::get_data($key)) {
-                                        $key = $raid->GetID() . "-soldungb-raid";
+                                        $key = $raid->GetID() . "-airplane-raid";
                                         if (!quest::get_data($key)) {
                                                 if ($raid->IsLeader($name)) {
                                                         $client->Message(15, "Agent of Change says, 'Hello, $name.  Would you like to [create] a raid instance?'");
@@ -23,7 +26,7 @@ sub EVENT_SAY {
                                 }
                                 else {
 					my $LockoutTime = quest::get_data_expires($key) - time();
-                                        $key = $raid->GetID() . "-soldungb-raid";
+                                        $key = $raid->GetID() . "-airplane-raid";
                                         if (!quest::get_data($key)) {
 						$client->Message(15, "Agent of Change says, 'Hello, $name.  It looks like your raid instance expired.  You can rejoin another in $LockoutTime seconds.'");
 	                                }
@@ -34,13 +37,13 @@ sub EVENT_SAY {
                         }
                         else {
                               	my $LockoutTime = quest::get_data_expires($key) - time();
-                                $key = $name . "-soldungb-raid";
+                                $key = $name . "-airplane-raid";
                                 if (!quest::get_data($key)) {
                                         $client->Message(15, "Agent of Change says, 'Hello, $name.  It looks like your raid instance expired.  You can rejoin another in $LockoutTime seconds.'");
                                 }
                                 else {
 					$value = quest::get_data($key);
-					$key = $raid->GetID() . "-soldungb-raid";
+					$key = $raid->GetID() . "-airplane-raid";
 					if (!quest::get_data($key)) {
                                                 if ($raid->IsLeader($name)) {
                                                         $client->Message(15, "Agent of Change says, 'Hello, $name.  Would you like to [create] a raid instance?'");
@@ -64,25 +67,28 @@ sub EVENT_SAY {
         }
 	elsif ($text=~/create/i) {
                 $raid = $client->GetRaid();
-		if ($raid > 0) {
+                if ($ulevel < 46) {
+			$client->Message(15,"Much to learn you still have… padawan. Return once your power has increased!");
+		}
+		elsif ($raid > 0) {
                         if ($raid->IsLeader($name)) {
-                                $key = $name . "-soldungb-instance";
+                                $key = $name . "-airplane-instance";
                                 if (!quest::get_data($key)) {
-                                        $key = $name . "-soldungb-raid";
+                                        $key = $name . "-airplane-raid";
                                         if (!quest::get_data($key)) {
-                                                $key = $raid->GetID() . "-soldungb-raid";
+                                                $key = $raid->GetID() . "-airplane-raid";
                                                 if (!quest::get_data($key)) {
-                                                        $Instance = quest::CreateInstance("soldungb", 0, 345600);
+                                                        $Instance = quest::CreateInstance("airplane", 0, 345600);
                                                         quest::set_data($key, $Instance, 43200);
-                                                        $client->Message(15, "Agent of Change says, 'Your instance ( $Instance ) has been created. Let me know when you are [ready] to go to Nagafen's Lair.'");
+                                                        $client->Message(15, "Agent of Change says, 'Your instance ( $Instance ) has been created. Let me know when you are [ready] to go to the Plane of Sky.'");
                                                 }
                                         }
                                         else {
-                                              	$client->Message(15, "Agent of Change says, 'You already have instance. Let me know when you are [ready] to go to Nagafen's Lair.'");
+                                              	$client->Message(15, "Agent of Change says, 'You already have instance. Let me know when you are [ready] to go to the Plane of Sky.'");
                                         }
                                 }
                                 else {
-                                      	$client->Message(15, "Agent of Change says, 'You already have instance. Let me know when you are [ready] to go to Nagafen's Lair.'");
+                                      	$client->Message(15, "Agent of Change says, 'You already have instance. Let me know when you are [ready] to go to the Plane of Sky.'");
                                 }
                         }
                         else {
@@ -95,25 +101,39 @@ sub EVENT_SAY {
         }
 	elsif ($text=~/ready/i) {
                 $raid = $client->GetRaid();
-		if ($raid > 0) {
-                        $key = $raid->GetID() . "-soldungb-raid";
+                if ($ulevel < 46) {
+			$client->Message(15,"Much to learn you still have… padawan. Return once your power has increased!");
+		}
+		elsif ($raid > 0) {
+                        $key = $raid->GetID() . "-airplane-raid";
                         if (!quest::get_data($key)) {
                                 $client->Message(15, "Agent of Change says, 'Sorry, but your raid does not have an instance.  Ask your raid leader to make one.'");
                         }
                         else {
                               	$InstanceTime = quest::get_data_expires($key) - time();
                                 $Instance = quest::get_data($key);
-                                $key = $name . "-soldungb-raid";
+                                $key = $name . "-airplane-raid";
                                 if (!quest::get_data($key)) {
-                                        quest::set_data($key, $raid->GetID(), $InstanceTime);
-                                }
-                                $key = $name . "-soldungb-instance";
-                                if (!quest::get_data($key)) {
-                                        quest::set_data($key, $Instance, $LockoutTime);
-                                }
-                                $client->AssignToInstance($Instance);
-                                $client->MovePCInstance(32, $Instance, -265, -413, -112, 0);
-                                plugin::RandomSay(100, "You have nice manners for a thief and a liar.", "You seem familiar with my name, but I don't seem to remember smelling you before.", "Who are you and where do you come from, may I ask?", "Well thief! I smell you and I feel your air. I hear your breath. Come along! Help yourself again, there is plenty and to spare!", "I kill where I wish and none dare resist.", "I laid low the warriors of old and their like is not in the world today.");
+					$key = $name . "-airplane-instance";					
+	                                if (!quest::get_data($key)) {
+						quest::set_data($key, $Instance, $LockoutTime);
+						$key = $name . "-airplane-raid";
+	                                        quest::set_data($key, $raid->GetID(), $InstanceTime);
+						$client->AssignToInstance($Instance);
+						$client->MovePCInstance(71, $Instance, 539, 1384, -664, 0);
+						plugin::RandomSay(100, "Kiss those buffs goodbye!", "Watch that first step!");
+                                	}
+					else {
+						if ($Instance == quest::get_data($key)) {
+							$client->MovePCInstance(71, $Instance, 539, 1384, -664, 0);
+							plugin::RandomSay(100, "Kiss those buffs goodbye!", "Watch that first step!");
+						}
+						else {
+							my $LockoutTime = quest::get_data_expires($key) - time();
+							quest::say("Sorry $name, but you still have an active instance " . quest::get_data($key) . ", and your raid is in instance $Instance.  You can join another Airplane instance in $LockoutTime seconds.");
+						}
+					}
+				}
                         }
                 }
                 else {
